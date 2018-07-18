@@ -16,7 +16,7 @@ public class RandomSpout extends BaseRichSpout {
     private Map<String,Values> ackMap = new HashMap<String, Values>();
     private List<String> logList = new ArrayList<String>();
     private SpoutOutputCollector collector;
-    private Random random = new Random();
+    private Random random;
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
         this.collector = collector;
         //产生日志数据  格式：appId$$$$$日志内容
@@ -119,6 +119,7 @@ public class RandomSpout extends BaseRichSpout {
     }
 
     public void nextTuple() {
+        random = new Random();
         //随机从list中取出日志数据，构成Tuple
         String log = logList.get(random.nextInt(logList.size()));
         //生成messageId
